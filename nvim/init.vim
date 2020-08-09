@@ -1,4 +1,4 @@
-call plug#begin("~/.vim/plugged")
+call plug#begin("~/.config/nvim/plugged")
 Plug 'dracula/vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf', { 'do': { -> fzf#Install() } }
