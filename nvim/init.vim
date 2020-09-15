@@ -1,18 +1,23 @@
 call plug#begin("~/.config/nvim/plugged")
-Plug 'dracula/vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'junegunn/fzf', { 'do': { -> fzf#Install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'stsewd/fzf-checkout.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'
 Plug 'vim-utils/vim-man'
-Plug 'theprimeagen/vim-be-good', {'do': './install.sh'}
 Plug 'vim-airline/vim-airline'
-Plug 'mbbill/undotree'
 Plug 'gruvbox-community/gruvbox'
 Plug 'scrooloose/nerdcommenter'
-Plug 'rakr/vim-one'
+Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-dispatch'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'rust-lang/rust.vim'
+Plug 'vuciv/vim-bujo'
+Plug 'vim-airline/vim-airline'
+Plug 'airblade/vim-gitgutter'
+Plug 'ryanoasis/vim-devicons'
+Plug 'diepm/vim-rest-console'
 call plug#end()"Config Section
 
 syntax on
@@ -22,12 +27,12 @@ set relativenumber
 set nohlsearch
 set hidden
 set noerrorbells
-set tabstop=2 softtabstop=2
-set shiftwidth=2
+set tabstop=2 softtabstop=2 shiftwidth=2 expandtab autoindent smartindent
 set expandtab
 set smartindent
 set nu
 set nowrap
+set ignorecase
 set smartcase
 set noswapfile
 set nobackup
@@ -39,10 +44,15 @@ set termguicolors
 set scrolloff=8
 set noshowmode
 set clipboard=unnamedplus
-filetype plugin on
+filetype plugin indent on "enable filetype and indentation detection
 
 imap jk <Esc>
 imap kj <Esc>
+
+nmap <C-n> :NERDTreeToggle<CR>
+vmap ++ <plug>NERDCommenterToggle
+nmap ++ <plug>NERDCommenterToggle
+let g:NERDTreeIgnore = ['^node_modules$']
 
 " Give more space for displaying messages.
 set cmdheight=2
@@ -55,15 +65,11 @@ set updatetime=50
 set shortmess+=c
 
 set colorcolumn=80
+highlight ColorColumn ctermbg=0 guibg=lightgrey
 
-if (has("termguicolors"))
- set termguicolors
-endif
-" colorscheme dracula
+set termguicolors
 colorscheme gruvbox
-"colorscheme one
 set background=dark
-
 
 " map leader to space
 let mapleader = " "
@@ -103,15 +109,25 @@ let $FZF_DEFAULT_OPTS='--reverse'
 nmap <leader>gj :diffget //3<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gs :G<CR>
-
+"nmap <leader>gc :GCheckout<CR>
+nmap <leader>ga :Git fetch --all<CR>
+nmap <leader>gc :GBranches<CR>
 
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 inoremap <silent><expr> <C-space> coc#refresh()
 
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
-
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
@@ -126,7 +142,7 @@ nmap <leader>gd <Plug>(coc-definition)
 nmap <leader>gy <Plug>(coc-type-definition)
 nmap <leader>gi <Plug>(coc-implementation)
 nmap <leader>gr <Plug>(coc-references)
-nmap <leader>rr <Plug>(coc-rename)
+nmap <leader>rr <Prug>(coc-rename)
 nmap <leader>g[ <Plug>(coc-diagnostic-prev)
 nmap <leader>g] <Plug>(coc-diagnostic-next)
 nmap <silent> <leader>gp <Plug>(coc-diagnostic-prev-error)
@@ -154,6 +170,11 @@ inoremap <silent><expr> <TAB>
       \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
@@ -166,3 +187,25 @@ augroup mygroup
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
+
+augroup highlight_yank
+  autocmd!
+  autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank()
+augroup END
+
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Bunjo Todos
+" :Todo
+" :Todo g
+"
+" Change bujo window size
+let g:bujo#window_width = 50
+" Insert a new task
+nmap <C-S> <Plug>BujoAddnormal
+imap <C-S> <Plug>BujoAddinsert
+" Check offf a task
+nmap <C-Q> <Plug>BujoChecknormal
+imap <C-Q> <Plug>BujoCheckinsert
+
+let g:vrc_output_buffer_name = '__VRC_OUTPUT.<filetype>'
