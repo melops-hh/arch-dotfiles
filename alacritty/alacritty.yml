@@ -1,5 +1,13 @@
 env:
   TERM: xterm-256color
+  # WINIT_UNIX_BACKEND: x11 alacritty
+
+key_bindings:
+  - { key: F,   mods: Control,           action: SearchForward    }
+  - { key: V,   mods: Control,           action: Paste }
+
+selection:
+  save_to_clipboard: true
 
 # Font configuration
 font:
