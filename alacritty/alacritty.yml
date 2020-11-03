@@ -4,7 +4,7 @@ env:
 
 key_bindings:
   - { key: F,   mods: Control,           action: SearchForward    }
-  - { key: V,   mods: Control,           action: Paste }
+# - { key: V,   mods: Control,           action: Paste }
 
 selection:
   save_to_clipboard: true
@@ -46,3 +46,6 @@ colors:
     white:   '0xebdbb2'
 
 background_opacity: 1.0
+
+window:
+  decorations: none

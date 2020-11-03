@@ -1,0 +1,64 @@
+#!/usr/bin/bash
+source ~/.config/work-aliasrc;
+
+alias ls="lsd"
+alias ll="ls -lah --color=auto"
+alias vim="nvim"
+alias svim="sudo nvim"
+alias latr="ls -latr"
+alias cp="cp -iv"
+alias mv="mv -iv"
+alias rm="rm -v"
+alias mkd="mkdir -pv"
+alias grep="grep --color=auto"
+alias diff="diff --color=auto"
+alias ...="cd ../../"
+alias sc="sudo systemctl"
+alias dc="docker-compose"
+alias rm-nm="find . -name node_modules -type d -prune -exec rm -rf '{}' +"
+alias tbase="tmux new -s base"
+alias npm-update="ncu -u && npm i"
+#alias man="viman"
+alias ev="vim ~/.config/nvim/init.vim"
+alias ez="vim ~/.config/zsh/.zshrc"
+alias ea="vim ~/.config/aliasrc"
+alias et="vim ~/.config/tmux/tmux.conf"
+alias h='function hdi(){ ~/.local/bin/howdoi $* -c -n 5; }; hdi'
+
+se() { nvim $(fd -I -H -d 4 -E node_modules '' ~/Work | sk -m); }
+work () {
+  cd  $(fd -t d -d 2 "$1" ~/Work | sk ); 
+}
+mod() {
+  vim +:GFiles;
+}
+push(){
+  currentBranch=$(git rev-parse --abbrev-ref HEAD);
+  echo "push changes to $currentBranch";
+  git push origin $currentBranch;
+}
+pull(){
+  currentBranch=$(git rev-parse --abbrev-ref HEAD);
+  echo "pull $currentBranch";
+  git pull origin $currentBranch;
+}
+
+if type rg &> /dev/null; then
+  export FZF_DEFAULT_COMMAND='rg --files'
+  export FZF_DEFAULT_OPTS='-m --height 50% --border'
+fi
+
+jwtd() {
+  if [[ -x $(command -v jq) ]]; then
+    jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' <<< "${1}"
+    echo "Signature: $(echo "${1}" | awk -F'.' '{print $3}')"
+  fi
+}
+
+tryhackmevpn() {
+  sudo openvpn /home/moritz/Vpn/try-hack-me/r6nd5j5tho.ovpn
+}
+
+hackthebockvpn() {
+  sudo openvpn /home/moritz/Vpn/hack-the-box/30xi251.ovpn
+}
