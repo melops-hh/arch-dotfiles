@@ -27,10 +27,11 @@ Clone the Prezto Repo
 git clone --recursive https://github.com/sorin-ionescu/prezto.git "${ZDOTDIR:-$HOME}/.zprezto"
 ```
 
-Set zlogin and zlogout links
+Create symlinks
 ```sh
 ln -s $ZDOTDIR/.zprezto/runcoms/zlogin $ZDOTDIR/.zlogin
 ln -s $ZDOTDIR/.zprezto/runcoms/zlogout $ZDOTDIR/.zlogout
+ln -s $ZDOTDIR/.zshenv $HOME/.zshenv
 ```
 
 Set Zsh as default
