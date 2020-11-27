@@ -1,6 +1,4 @@
 #!/usr/bin/bash
-source ~/.config/work-aliasrc;
-
 alias ls="lsd"
 alias ll="ls -lah --color=auto"
 alias vim="nvim"
@@ -48,11 +46,6 @@ pull(){
   git pull origin $currentBranch;
 }
 
-if type rg &> /dev/null; then
-  export FZF_DEFAULT_COMMAND='rg --files'
-  export FZF_DEFAULT_OPTS='-m --height 50% --border'
-fi
-
 jwtd() {
   if [[ -x $(command -v jq) ]]; then
     jq -R 'split(".") | .[0],.[1] | @base64d | fromjson' <<< "${1}"
@@ -61,9 +54,9 @@ jwtd() {
 }
 
 tryhackmevpn() {
-  sudo openvpn /home/moritz/Vpn/try-hack-me/r6nd5j5tho.ovpn
+  sudo openvpn "${HOME}/Vpn/try-hack-me/r6nd5j5tho.ovpn"
 }
 
 hackthebockvpn() {
-  sudo openvpn /home/moritz/Vpn/hack-the-box/30xi251.ovpn
+  sudo openvpn "${HOME}/Vpn/hack-the-box/30xi251.ovpn"
 }
