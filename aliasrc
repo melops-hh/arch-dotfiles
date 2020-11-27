@@ -8,7 +8,6 @@ alias svim="sudo nvim"
 alias latr="ls -latr"
 alias cp="cp -iv"
 alias mv="mv -iv"
-alias rm="rm -v"
 alias mkd="mkdir -pv"
 alias grep="grep --color=auto"
 alias diff="diff --color=auto"
@@ -18,12 +17,18 @@ alias dc="docker-compose"
 alias rm-nm="find . -name node_modules -type d -prune -exec rm -rf '{}' +"
 alias tbase="tmux new -s base"
 alias npm-update="ncu -u && npm i"
+
 #alias man="viman"
 alias ev="vim ~/.config/nvim/init.vim"
 alias ez="vim ~/.config/zsh/.zshrc"
 alias ea="vim ~/.config/aliasrc"
 alias et="vim ~/.config/tmux/tmux.conf"
 alias h='function hdi(){ ~/.local/bin/howdoi $* -c -n 5; }; hdi'
+alias ts="npx ts-node"
+
+react-native-typescript-new(){
+  npx react-native init $1 --template react-native-template-typescript 
+}
 
 se() { nvim $(fd -I -H -d 4 -E node_modules '' ~/Work | sk -m); }
 work () {
