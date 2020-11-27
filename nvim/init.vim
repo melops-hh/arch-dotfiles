@@ -7,17 +7,21 @@ Plug 'tpope/vim-fugitive'
 Plug 'sheerun/vim-polyglot'
 Plug 'vim-utils/vim-man'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'gruvbox-community/gruvbox'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree'
+Plug 'mbbill/undotree'
 Plug 'tpope/vim-dispatch'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'rust-lang/rust.vim'
 Plug 'vuciv/vim-bujo'
-Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'ryanoasis/vim-devicons'
 Plug 'diepm/vim-rest-console'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'Vimjas/vim-python-pep8-indent'
 call plug#end()"Config Section
 
 syntax on
@@ -74,9 +78,13 @@ set background=dark
 " map leader to space
 let mapleader = " "
 
+" use tab to switch buffers
+nnoremap  <silent>   <tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bnext<CR>
+nnoremap  <silent> <s-tab>  :if &modifiable && !&readonly && &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+
 " PLUGIN: FZF
 nnoremap <silent> <Leader>b :Buffers<CR>
-"nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <Leader>pf :Files<CR>
 nnoremap <silent> <C-p> :GFiles<CR>
 nnoremap <silent> <Leader>f :Rg<CR>
 " nnoremap <silent> <Leader>/ :BLines<CR>
@@ -126,16 +134,17 @@ else
 endif
 
 
+nnoremap <silent> K :call CocAction('doHover')<CR>
 " Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
 
 " GoTo code navigation.
 nmap <leader>gd <Plug>(coc-definition)
@@ -209,3 +218,9 @@ nmap <C-Q> <Plug>BujoChecknormal
 imap <C-Q> <Plug>BujoCheckinsert
 
 let g:vrc_output_buffer_name = '__VRC_OUTPUT.<filetype>'
+
+let g:airline_theme='gruvbox'
+let g:airline_powerline_fonts = 1
+
+" set filetypes as typescript.tsx
+autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx
