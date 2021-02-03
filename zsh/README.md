@@ -22,14 +22,13 @@ Set ZDOTDIR
 export ZDOTDIR="${HOME}/.config/zsh"
 ```
 
-if you just want to use zsh not all other dotfiles:
+if you just want to use zsh, not all other dotfiles:
 ```sh
-wget -o ${ZDOTDIR}/.p10k.zsh https://raw.githubusercontent.com/melops-hh/dotfiles/master/zsh/.p10k.zsh && \
-wget -o ${ZDOTDIR}/.zpreztorc https://raw.githubusercontent.com/melops-hh/dotfiles/master/zsh/.zpreztorc && \
-wget -o ${ZDOTDIR}/.zprofile https://raw.githubusercontent.com/melops-hh/dotfiles/master/zsh/.zprofile && \
-wget -o ${ZDOTDIR}/.zshenv https://raw.githubusercontent.com/melops-hh/dotfiles/master/zsh/.zshenv && \
-wget -o ${ZDOTDIR}/.zshrc https://raw.githubusercontent.com/melops-hh/dotfiles/master/zsh/
-.zshrc 
+curl -o ${ZDOTDIR}/.p10k.zsh https://raw.githubusercontent.com/melops-hh/dotfiles/master/zsh/.p10k.zsh && \
+curl -o ${ZDOTDIR}/.zpreztorc https://raw.githubusercontent.com/melops-hh/dotfiles/master/zsh/.zpreztorc && \
+curl -o ${ZDOTDIR}/.zprofile https://raw.githubusercontent.com/melops-hh/dotfiles/master/zsh/.zprofile && \
+curl -o ${ZDOTDIR}/.zshenv https://raw.githubusercontent.com/melops-hh/dotfiles/master/zsh/.zshenv && \
+curl -o ${ZDOTDIR}/.zshrc https://raw.githubusercontent.com/melops-hh/dotfiles/master/zsh/.zshrc 
 ```
 
 Clone the Prezto Repo
